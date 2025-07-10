@@ -1,6 +1,7 @@
 import { BlackBearCard } from './components/BlackBearCard';
 import { PolarBearCard } from './components/PolarBearCard';
 import { PandaBearCard } from './components/PandaBearCard';
+import BearsDisplay from './components/BearsDisplay';
 
 export const BearPage = () => {
   return (
@@ -13,6 +14,7 @@ export const BearPage = () => {
         <BlackBearCard />
         <PolarBearCard />
         <PandaBearCard />
+        <BearsDisplay />
       </div>
     </>
   );
