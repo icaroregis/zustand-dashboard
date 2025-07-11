@@ -27,7 +27,9 @@ export const useBearStore = create<BearState>()(
       polarBears: 5,
       pandaBears: 1,
       bears: [{ id: 1, name: 'Black Bear' }],
-      totalBears: () => get().blackBears + get().polarBears + get().pandaBears + get().bears.length,
+      totalBears: () => {
+        return get().blackBears + get().polarBears + get().pandaBears + get().bears.length;
+      },
       increaseBlackBears: (bear: number) => set((state) => ({ blackBears: state.blackBears + bear })),
       increasePolarBears: (bear: number) => set((state) => ({ polarBears: state.polarBears + bear })),
       increasePandaBears: (bear: number) => set((state) => ({ pandaBears: state.pandaBears + bear })),
