@@ -1,6 +1,6 @@
 import { create, type StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { customSessionStorage } from '../storages/session-storage.storage';
+import { firebaseStorage } from '../storages/firebase-storage';
 
 interface PersonState {
   firstName: string;
@@ -23,6 +23,7 @@ export const usePersonStore = create<PersonState & Actions>()(
   persist(storeAPi, {
     //nome da chave que esta sendo salvo no localStorage
     name: 'person-storage',
-    storage: customSessionStorage,
+    // storage: customSessionStorage,
+    storage: firebaseStorage,
   }),
 );

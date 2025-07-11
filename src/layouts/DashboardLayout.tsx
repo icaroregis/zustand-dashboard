@@ -7,9 +7,9 @@ export const DashboardLayout = () => {
       <div className="flex flex-row relative w-screen">
         <SideMenu />
 
-        <div className="w-full p-4">
+        <main className="w-full p-4" role="main" aria-label="Conteúdo principal">
           <Outlet />
-        </div>
+        </main>
       </div>
     </div>
   );

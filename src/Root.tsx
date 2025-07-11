@@ -8,7 +8,7 @@ export const Root = () => {
   }
 
   return (
-    <main>
+    <main role="main" aria-label="Aplicação principal">
       <Outlet />
     </main>
   );

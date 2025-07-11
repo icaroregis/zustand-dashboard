@@ -15,11 +15,11 @@ export const PersonPage = () => {
 
       <WhiteCard className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[550px]">
-          <form>
+          <form aria-label="Formulário de dados pessoais">
             <div className="-mx-3 flex flex-wrap">
               <div className="w-full px-3 sm:w-1/2">
                 <div className="mb-5">
-                  <label className="mb-3 block text-base font-medium text-[#07074D]">Nombre</label>
+                  <label htmlFor="firstName" className="mb-3 block text-base font-medium text-[#07074D]">Nombre</label>
                   <input
                     type="text"
                     name="firstName"
@@ -27,12 +27,13 @@ export const PersonPage = () => {
                     placeholder="Primer Nombre"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
+                    aria-describedby="firstName-help"
                   />
                 </div>
               </div>
               <div className="w-full px-3 sm:w-1/2">
                 <div className="mb-5">
-                  <label className="mb-3 block text-base font-medium text-[#07074D]">Apellido</label>
+                  <label htmlFor="lastName" className="mb-3 block text-base font-medium text-[#07074D]">Apellido</label>
                   <input
                     type="text"
                     name="lastName"
@@ -40,12 +41,13 @@ export const PersonPage = () => {
                     placeholder="Apellido"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
+                    aria-describedby="lastName-help"
                   />
                 </div>
               </div>
             </div>
 
-            <pre className="bg-gray-200 p-5 rounded-[20px]">
+            <pre className="bg-gray-200 p-5 rounded-[20px]" role="status" aria-live="polite">
               {JSON.stringify(
                 {
                   firstName,

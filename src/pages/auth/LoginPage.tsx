@@ -22,36 +22,42 @@ export const LoginPage = () => {
 
       <form onSubmit={onSubmit}>
         <div className="mb-4">
-          <label className="block text-gray-600">Username</label>
+          <label htmlFor="username" className="block text-gray-600">Username</label>
           <input
+            id="username"
             type="text"
             name="username"
-            autoComplete="off"
+            autoComplete="username"
+            aria-describedby="username-help"
           />
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-600">Password</label>
+          <label htmlFor="password" className="block text-gray-600">Password</label>
           <input
+            id="password"
             type="password"
             name="password"
-            autoComplete="off"
+            autoComplete="current-password"
+            aria-describedby="password-help"
           />
         </div>
 
         <div className="mb-4 flex items-center">
           <input
+            id="remember"
             type="checkbox"
             name="remember"
             className="text-blue-500"
           />
-          <label className="text-gray-600 ml-2">Remember Me</label>
+          <label htmlFor="remember" className="text-gray-600 ml-2">Remember Me</label>
         </div>
 
         <div className="mb-6 text-blue-500">
           <a
             href="#"
-            className="hover:underline">
+            className="hover:underline"
+            aria-label="Esqueceu sua senha? Clique aqui para recuperar">
             Forgot Password?
           </a>
         </div>
@@ -65,7 +71,8 @@ export const LoginPage = () => {
       <div className="mt-6 text-blue-500 text-center">
         <a
           href="#"
-          className="hover:underline">
+          className="hover:underline"
+          aria-label="Não tem uma conta? Clique aqui para se cadastrar">
           Sign up Here
         </a>
       </div>

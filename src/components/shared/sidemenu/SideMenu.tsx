@@ -6,6 +6,7 @@ import {
   IoHeartOutline,
   IoListOutline,
   IoAccessibilityOutline,
+  IoFlameOutline,
 } from 'react-icons/io5';
 import { NavLink } from 'react-router-dom';
 import './SideMenu.css';
@@ -24,13 +25,16 @@ const menuItems: MenuItem[] = [
   { title: 'Persona', subTitle: 'Nombre y apellido', href: '/dashboard/person', Icon: IoAccessibilityOutline },
   { title: 'Tareas', subTitle: 'Listado de tareas', href: '/dashboard/tasks', Icon: IoListOutline },
   { title: 'Boda', subTitle: 'Invitados a la boda', href: '/dashboard/wedding-invitation', Icon: IoHeartOutline },
+  { title: 'Firebase Test', subTitle: 'Teste do Firebase', href: '/dashboard/firebase-test', Icon: IoFlameOutline },
 ];
 
 export const SideMenu = () => {
   return (
-    <div
+    <aside
       id="menu"
-      className="bg-gray-900 min-h-screen z-10 text-slate-300 w-80 left-0 overflow-y-scroll">
+      className="bg-gray-900 min-h-screen z-10 text-slate-300 w-80 left-0 overflow-y-scroll"
+      role="complementary"
+      aria-label="Menu de navegação principal">
       <div
         id="logo"
         className="my-4 px-6">
@@ -49,12 +53,13 @@ export const SideMenu = () => {
         <p className="text-slate-500">Bienvenido,</p>
         <a
           href="#"
-          className="inline-flex space-x-2 items-center">
+          className="inline-flex space-x-2 items-center"
+          aria-label="Perfil do usuário Edward Tompson">
           <span>
             <img
               className="rounded-full w-8 h-8"
               src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=128&q=80"
-              alt=""
+              alt="Foto de perfil de Edward Tompson"
             />
           </span>
           <span className="text-sm md:text-base font-bold">Edward Tompson</span>
@@ -64,7 +69,9 @@ export const SideMenu = () => {
       {/* Menu Items */}
       <nav
         id="nav"
-        className="w-full px-6">
+        className="w-full px-6"
+        role="navigation"
+        aria-label="Menu de navegação">
         {menuItems.map((item) => (
           <SideMenuItem
             key={item.href}
@@ -75,7 +82,8 @@ export const SideMenu = () => {
         {/* Logout */}
         <NavLink
           to={'/auth/login'}
-          className="mt-10">
+          className="mt-10"
+          aria-label="Sair da aplicação">
           <div>
             <IoLogOutOutline />
           </div>
@@ -85,6 +93,6 @@ export const SideMenu = () => {
           </div>
         </NavLink>
       </nav>
-    </div>
+    </aside>
   );
 };
