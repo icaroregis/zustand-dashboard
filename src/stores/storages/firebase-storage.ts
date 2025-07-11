@@ -18,6 +18,7 @@ const storageApi: StateStorage = {
         method: 'PUT',
         body: JSON.stringify(value),
       }).then((res) => res.json());
+      console.count('setItem');
       return;
     } catch (error) {
       console.error(error);

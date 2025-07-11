@@ -9,7 +9,7 @@ import { WhiteCard } from '../../components';
 import { useBearStore, usePersonStore } from '../../stores';
 
 export const Dashboard = () => {
-  const computedBears = useBearStore((state) => state.computedBears.totalBears);
+  const computedBears = useBearStore((state) => state.totalBears);
   const firstName = usePersonStore((state) => state.firstName);
   const lastName = usePersonStore((state) => state.lastName);
 
@@ -26,7 +26,7 @@ export const Dashboard = () => {
             className="text-indigo-600"
           />
           <h2>Osos</h2>
-          <p>{computedBears}</p>
+          <p>{computedBears()}</p>
         </WhiteCard>
 
         <WhiteCard centered>
