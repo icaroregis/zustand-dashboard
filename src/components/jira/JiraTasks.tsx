@@ -1,13 +1,16 @@
 import { IoCheckmarkCircleOutline, IoEllipsisHorizontalOutline, IoReorderTwoOutline } from 'react-icons/io5';
+import { TaskStatus } from '../../interfaces';
 
 interface Props {
   title: string;
-  value: 'pending' | 'in-progress' | 'done';
+  value: TaskStatus;
 }
 
 export const JiraTasks = ({ title }: Props) => {
   return (
-    <section className="!text-black relative flex flex-col rounded-[20px]  bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]" aria-label={`Lista de tarefas: ${title}`}>
+    <section
+      className="!text-black relative flex flex-col rounded-[20px]  bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]"
+      aria-label={`Lista de tarefas: ${title}`}>
       {/* Task Header */}
       <header className="relative flex flex-row justify-between">
         <div className="flex items-center justify-center">
@@ -33,7 +36,7 @@ export const JiraTasks = ({ title }: Props) => {
           <div className="flex items-center justify-center gap-2">
             <p className="text-base font-bold text-navy-700">Tarea número 1</p>
           </div>
-          <button 
+          <button
             className="h-6 w-6 text-navy-700 cursor-pointer"
             aria-label="Mover tarefa número 1">
             <IoReorderTwoOutline />
@@ -44,7 +47,7 @@ export const JiraTasks = ({ title }: Props) => {
           <div className="flex items-center justify-center gap-2">
             <p className="text-base font-bold text-navy-700">Tarea número 2</p>
           </div>
-          <button 
+          <button
             className="h-6 w-6 text-navy-700 cursor-pointer"
             aria-label="Mover tarefa número 2">
             <IoReorderTwoOutline />
