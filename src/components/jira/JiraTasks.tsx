@@ -36,12 +36,6 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
 
   return (
     <section
-      /**
-       * - Drag and drop event handlers:
-       *   - `onDragOver`: Evita o comportamento padrão e registra quando um item é arrastado sobre esta seção
-       *   - `onDragLeave`: Evita o comportamento padrão e registra quando um item sai desta seção
-       *   - `onDrop`: Evita o comportamento padrão e registra quando um item é solto nesta seção
-       */
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
