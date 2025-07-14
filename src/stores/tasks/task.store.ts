@@ -1,12 +1,18 @@
 import { create, StateCreator } from 'zustand';
+import { devtools } from 'zustand/middleware';
 import type { Task, TaskStatus } from '../../interfaces';
 
 interface TaskState {
   tasks: Record<string, Task>;
+  draggingTaskId: string | undefined;
   getTaskByStatus: (status: TaskStatus) => Task[];
+  setDraggingTaskId: (taskId: string) => void;
+  removeDraggingTaskId: (taskId: string) => void;
 }
 
 const storeApi: StateCreator<TaskState> = (set, get) => ({
+  draggingTaskId: undefined,
+
   tasks: {
     'ABC-1': {
       id: 'ABC-1',
@@ -35,6 +41,17 @@ const storeApi: StateCreator<TaskState> = (set, get) => ({
     // O método Object.values sempre recebe um objeto como argumento e retorna um array contendo apenas os valores desse objeto (ignorando as chaves).
     return Object.values(tasks).filter((task) => task.status === status);
   },
+
+  setDraggingTaskId(taskId: string) {
+    set({ draggingTaskId: taskId });
+    console.log('Dragging task set:', taskId);
+  },
+
+  removeDraggingTaskId(taskId: string) {
+    if (get().draggingTaskId === taskId) {
+      set({ draggingTaskId: undefined });
+    }
+  },
 });
 
-export const useTaskStore = create<TaskState>()(storeApi);
+export const useTaskStore = create<TaskState>()(devtools(storeApi));

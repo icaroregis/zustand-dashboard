@@ -1,6 +1,8 @@
 import { IoCheckmarkCircleOutline, IoEllipsisHorizontalOutline } from 'react-icons/io5';
 import { Task, TaskStatus } from '../../interfaces';
 import SingleTasks from './SingleTask';
+import { useTaskStore } from '../../stores';
+import { cn } from '../../utils/cn';
 
 interface Props {
   title: string;
@@ -9,9 +11,40 @@ interface Props {
 }
 
 export const JiraTasks = ({ title, value, tasks }: Props) => {
+  const isDragging = useTaskStore((state) => !!state.draggingTaskId);
+
+  function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    console.log('Drag over:', title);
+  }
+
+  function handleDragLeave(e: React.DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    console.log('Drag leave:', title);
+  }
+
+  function handleDrop(e: React.DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    console.log('Drop on:', value);
+  }
+
   return (
     <section
-      className="!text-black relative flex flex-col rounded-[20px]  bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]"
+      /**
+       * - Drag and drop event handlers:
+       *   - `onDragOver`: Evita o comportamento padrão e registra quando um item é arrastado sobre esta seção
+       *   - `onDragLeave`: Evita o comportamento padrão e registra quando um item sai desta seção
+       *   - `onDrop`: Evita o comportamento padrão e registra quando um item é solto nesta seção
+       */
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+      className={cn(
+        '!text-black relative border-4 flex flex-col rounded-[20px]  bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]',
+        {
+          'border-blue-500 border-dotted': isDragging,
+        },
+      )}
       aria-label={`Lista de tarefas: ${title}`}>
       {/* Task Header */}
       <header className="relative flex flex-row justify-between">
