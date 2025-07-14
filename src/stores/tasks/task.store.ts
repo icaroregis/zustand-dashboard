@@ -8,6 +8,7 @@ interface TaskState {
   getTaskByStatus: (status: TaskStatus) => Task[];
   setDraggingTaskId: (taskId: string) => void;
   removeDraggingTaskId: (taskId: string) => void;
+  changeTaskStatus: (taskId: string, status: TaskStatus) => void;
 }
 
 const storeApi: StateCreator<TaskState> = (set, get) => ({
@@ -50,6 +51,16 @@ const storeApi: StateCreator<TaskState> = (set, get) => ({
   removeDraggingTaskId(taskId: string) {
     if (get().draggingTaskId === taskId) {
       set({ draggingTaskId: undefined });
+    }
+  },
+
+  changeTaskStatus(taskId: string, status: TaskStatus) {
+    const tasks = get().tasks;
+    if (tasks[taskId]) {
+      tasks[taskId].status = status;
+      set({ tasks });
+    } else {
+      console.warn(`Task ${taskId} not found`);
     }
   },
 });

@@ -15,6 +15,8 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
   const [onDragOver, setOnDragOver] = useState<boolean>(false);
   // isDragging: Está arrastando ?
   const isDragging = useTaskStore((state) => !!state.draggingTaskId);
+  const changeTaskStatus = useTaskStore((state) => state.changeTaskStatus);
+  const draggingTaskId = useTaskStore((state) => state.draggingTaskId);
 
   function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
     // Movendo o mouse sobre o elemento.
@@ -32,6 +34,7 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
     // Soltando o item arrastado.
     e.preventDefault();
     setOnDragOver(false);
+    changeTaskStatus(draggingTaskId!, value);
   }
 
   return (
