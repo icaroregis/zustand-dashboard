@@ -1,8 +1,9 @@
-import { IoCheckmarkCircleOutline, IoEllipsisHorizontalOutline } from 'react-icons/io5';
-import { Task, TaskStatus } from '../../interfaces';
+import { useState } from 'react';
+import { cn } from '../../utils/cn';
 import SingleTasks from './SingleTask';
 import { useTaskStore } from '../../stores';
-import { cn } from '../../utils/cn';
+import { Task, TaskStatus } from '../../interfaces';
+import { IoCheckmarkCircleOutline, IoEllipsisHorizontalOutline } from 'react-icons/io5';
 
 interface Props {
   title: string;
@@ -11,21 +12,26 @@ interface Props {
 }
 
 export const JiraTasks = ({ title, value, tasks }: Props) => {
+  const [onDragOver, setOnDragOver] = useState<boolean>(false);
+  // isDragging: Está arrastando ?
   const isDragging = useTaskStore((state) => !!state.draggingTaskId);
 
   function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
+    // Movendo o mouse sobre o elemento.
     e.preventDefault();
-    console.log('Drag over:', title);
+    setOnDragOver(true);
   }
 
   function handleDragLeave(e: React.DragEvent<HTMLDivElement>) {
+    // Saindo do elemento.
     e.preventDefault();
-    console.log('Drag leave:', title);
+    setOnDragOver(false);
   }
 
   function handleDrop(e: React.DragEvent<HTMLDivElement>) {
+    // Soltando o item arrastado.
     e.preventDefault();
-    console.log('Drop on:', value);
+    setOnDragOver(false);
   }
 
   return (
@@ -43,6 +49,7 @@ export const JiraTasks = ({ title, value, tasks }: Props) => {
         '!text-black relative border-4 flex flex-col rounded-[20px]  bg-white bg-clip-border shadow-3xl shadow-shadow-500  w-full !p-4 3xl:p-![18px]',
         {
           'border-blue-500 border-dotted': isDragging,
+          'border-green-500 border-dotted': isDragging && onDragOver,
         },
       )}
       aria-label={`Lista de tarefas: ${title}`}>
