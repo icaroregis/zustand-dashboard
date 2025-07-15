@@ -9,6 +9,7 @@ interface TaskState {
   setDraggingTaskId: (taskId: string) => void;
   removeDraggingTaskId: (taskId: string) => void;
   changeTaskStatus: (taskId: string, status: TaskStatus) => void;
+  onTaskDrop: (status: TaskStatus) => void;
 }
 
 const storeApi: StateCreator<TaskState> = (set, get) => ({
@@ -61,6 +62,14 @@ const storeApi: StateCreator<TaskState> = (set, get) => ({
       set({ tasks });
     } else {
       console.warn(`Task ${taskId} not found`);
+    }
+  },
+
+  onTaskDrop(status: TaskStatus) {
+    const draggingTaskId = get().draggingTaskId;
+    if (draggingTaskId) {
+      get().changeTaskStatus(draggingTaskId, status);
+      get().removeDraggingTaskId(draggingTaskId);
     }
   },
 });
