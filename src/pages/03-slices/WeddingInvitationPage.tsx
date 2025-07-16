@@ -13,6 +13,8 @@ export const WeddingInvitationPage = () => {
   const setEventDate = useWeddingBoundStore((state) => state.setEventDate);
   const setEventTime = useWeddingBoundStore((state) => state.setEventTime);
   const eventDate = useWeddingBoundStore((state) => state.eventDate);
+  const isConfirmation = useWeddingBoundStore((state) => state.isConfirmed);
+  const setIsConfirmed = useWeddingBoundStore((state) => state.setIsConfirmed);
 
   const formatTimeAMPM = (date: Date) => {
     return date.toLocaleTimeString('pt-BR', {
@@ -22,6 +24,11 @@ export const WeddingInvitationPage = () => {
     });
   };
 
+  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    console.log({ firstName, lastName, guestCount, eventDate, isConfirmation });
+  }
+
   return (
     <>
       <h1>Invitación de Boda</h1>
@@ -30,7 +37,9 @@ export const WeddingInvitationPage = () => {
 
       <WhiteCard className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-[550px]">
-          <form>
+          <form
+            onSubmit={onSubmit}
+            aria-label="Formulario de invitación de boda">
             <div className="-mx-3 flex flex-wrap">
               <div className="w-full px-3 sm:w-1/2">
                 <div className="mb-5">
@@ -109,6 +118,8 @@ export const WeddingInvitationPage = () => {
                     name="isComing"
                     id="radioButton1"
                     className="h-5 w-5"
+                    checked={isConfirmation === true}
+                    onChange={() => setIsConfirmed(true)}
                   />
                   <label className="pl-3 text-base font-medium text-[#07074D]">Si</label>
                 </div>
@@ -118,6 +129,8 @@ export const WeddingInvitationPage = () => {
                     name="isComing"
                     id="radioButton2"
                     className="h-5 w-5"
+                    checked={isConfirmation === false}
+                    onChange={() => setIsConfirmed(false)}
                   />
                   <label className="pl-3 text-base font-medium text-[#07074D]">No</label>
                 </div>
