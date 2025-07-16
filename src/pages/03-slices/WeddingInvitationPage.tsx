@@ -8,6 +8,19 @@ export const WeddingInvitationPage = () => {
   const setLastName = useWeddingBoundStore((state) => state.setLastName);
   const guestCount = useWeddingBoundStore((state) => state.guestCount);
   const setGuestCount = useWeddingBoundStore((state) => state.setGuestCount);
+  const eventYYYYMMDD = useWeddingBoundStore((state) => state.eventYYYYMMDD());
+  const eventHHMM = useWeddingBoundStore((state) => state.eventHHMM());
+  const setEventDate = useWeddingBoundStore((state) => state.setEventDate);
+  const setEventTime = useWeddingBoundStore((state) => state.setEventTime);
+  const eventDate = useWeddingBoundStore((state) => state.eventDate);
+
+  const formatTimeAMPM = (date: Date) => {
+    return date.toLocaleTimeString('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+  };
 
   return (
     <>
@@ -54,7 +67,6 @@ export const WeddingInvitationPage = () => {
                 id="guestNumber"
                 placeholder="5"
                 min="0"
-                className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 value={guestCount}
                 onChange={(e) => setGuestCount(Number(e.target.value))}
               />
@@ -68,6 +80,8 @@ export const WeddingInvitationPage = () => {
                     type="date"
                     name="eventDate"
                     id="eventDate"
+                    value={eventYYYYMMDD}
+                    onChange={(e) => setEventDate(e.target.value)}
                   />
                 </div>
               </div>
@@ -78,7 +92,10 @@ export const WeddingInvitationPage = () => {
                     type="time"
                     name="eventTime"
                     id="eventTime"
+                    value={eventHHMM}
+                    onChange={(e) => setEventTime(e.target.value)}
                   />
+                  <p className="mt-1 text-sm text-gray-600">Hora seleccionada: {formatTimeAMPM(eventDate)}</p>
                 </div>
               </div>
             </div>
@@ -108,7 +125,9 @@ export const WeddingInvitationPage = () => {
             </div>
 
             <div>
-              <button>Enviar</button>
+              <button className="w-full rounded-md bg-[#6A64F1] py-3 px-6 text-center text-base font-semibold text-white outline-none hover:bg-[#5b54d8]">
+                Enviar
+              </button>
             </div>
           </form>
         </div>
