@@ -1,6 +1,7 @@
 import { create, StateCreator } from 'zustand';
 import { v4 as uuidv4 } from 'uuid';
-import { devtools } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
 import type { Task, TaskStatus } from '../../interfaces';
 
 interface TaskState {
@@ -14,7 +15,7 @@ interface TaskState {
   onTaskDrop: (status: TaskStatus) => void;
 }
 
-const storeApi: StateCreator<TaskState> = (set, get) => ({
+const storeApi: StateCreator<TaskState, [['zustand/immer', never]]> = (set, get) => ({
   draggingTaskId: undefined,
 
   tasks: {
@@ -48,12 +49,30 @@ const storeApi: StateCreator<TaskState> = (set, get) => ({
 
   addTask: (title: string, status: TaskStatus) => {
     const newTask: Task = { id: uuidv4(), title, status };
-    set((state) => ({
-      tasks: {
-        ...state.tasks,
-        [newTask.id]: newTask,
-      },
-    }));
+
+    // ! 1 forma
+    // ? Usando immer middleware
+    // ? Para objetos aninhados essa é a melhor maneira de atualizar o estado
+    set((state) => {
+      state.tasks[newTask.id] = newTask;
+    });
+
+    // ! 2 forma
+    // ? Usando função produce do immer
+    // set(
+    //   produce((state: TaskState) => {
+    //     state.tasks[newTask.id] = newTask;
+    //   }),
+    // );
+
+    // ! 3 forma
+    // ? Forma nativa do Zustand
+    // set((state) => ({
+    //   tasks: {
+    //     ...state.tasks,
+    //     [newTask.id]: newTask,
+    //   },
+    // }));
   },
 
   setDraggingTaskId(taskId: string) {
@@ -67,14 +86,16 @@ const storeApi: StateCreator<TaskState> = (set, get) => ({
     }
   },
 
+  // ! O estado retornado por get() é somente leitura (readonly). Ao tentar modificar diretamente tasks[taskId].status = status, você está violando essa regra do immer.
+  // ? Para modificar o estado, você deve usar a função set() fornecida pelo Zustand, que é compatível com o immer.
   changeTaskStatus(taskId: string, status: TaskStatus) {
-    const tasks = get().tasks;
-    if (tasks[taskId]) {
-      tasks[taskId].status = status;
-      set({ tasks });
-    } else {
-      console.warn(`Task ${taskId} not found`);
-    }
+    set((state) => {
+      if (state.tasks[taskId]) {
+        state.tasks[taskId].status = status;
+      } else {
+        console.warn(`Task ${taskId} not found`);
+      }
+    });
   },
 
   onTaskDrop(status: TaskStatus) {
@@ -86,4 +107,10 @@ const storeApi: StateCreator<TaskState> = (set, get) => ({
   },
 });
 
-export const useTaskStore = create<TaskState>()(devtools(storeApi));
+export const useTaskStore = create<TaskState>()(
+  devtools(
+    persist(immer(storeApi), {
+      name: 'task-storage',
+    }),
+  ),
+);
