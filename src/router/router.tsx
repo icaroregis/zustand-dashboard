@@ -34,6 +34,10 @@ export const router = createBrowserRouter([
             path: 'wedding-invitation',
             element: <WeddingInvitationPage />,
           },
+          {
+            path: 'firebase-test',
+            element: <div>Firebase Test - Em desenvolvimento</div>,
+          },
         ],
       },
 
